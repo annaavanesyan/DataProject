@@ -1,0 +1,312 @@
+#include <iostream>
+#include <set>
+#include <string>
+#include <algorithm>
+#include <iterator>
+using namespace std;
+
+string mardInts[]= {"painting","volleyball","aeromodeling","astronomy","acting","hokey"};
+set<string> mard1interests(begin(mardInts), end(mardInts));
+
+
+class Interests{
+public:
+    set<string> allInterests;
+    set<string>::iterator it;
+public:
+    Interests();
+    void addInterest(string);
+    void printAllInterests();
+};
+
+Interests::Interests(){
+    
+
+    allInterests.insert("aeromodeling");
+    allInterests.insert("acting");
+    allInterests.insert("astronomy");
+/*
+    allInterests.insert("animals");
+    allInterests.insert("astrology");
+    allInterests.insert("basketball");
+    allInterests.insert("baseball");
+    allInterests.insert("bowling");
+    allInterests.insert("blogging");
+    allInterests.insert("camping");
+    allInterests.insert("calligraphy");
+    allInterests.insert("cooking");
+    allInterests.insert("couponing");
+    allInterests.insert("cosplaying");
+    allInterests.insert("coloring");
+    allInterests.insert("chesss");
+    allInterests.insert("dancing");
+    allInterests.insert("driving");
+    allInterests.insert("eating");
+    allInterests.insert("football");
+    allInterests.insert("gaming");
+    allInterests.insert("hunting");
+    allInterests.insert("hiking");
+    allInterests.insert("history");
+    allInterests.insert("ignoring");
+    allInterests.insert("juggling");
+    allInterests.insert("kissing");
+    allInterests.insert("laughing");
+    allInterests.insert("lifting");
+    allInterests.insert("magic");
+    allInterests.insert("meditation");
+    allInterests.insert("nail art");
+    allInterests.insert("origami");
+    allInterests.insert("painting");
+    allInterests.insert("poker");
+    allInterests.insert("parkour");
+    allInterests.insert("paintball");
+    allInterests.insert("quilting");
+    allInterests.insert("rapping");
+    allInterests.insert("running");
+    allInterests.insert("shooting");
+    allInterests.insert("skateboarding");
+    allInterests.insert("sailing");
+    allInterests.insert("singing");
+    allInterests.insert("soccer");
+    allInterests.insert("shopping");
+    allInterests.insert("singing");
+    allInterests.insert("soccer");
+    allInterests.insert("shopping");
+    allInterests.insert("tattooing");
+    allInterests.insert("upcycling");
+    allInterests.insert("volleyball");
+    allInterests.insert("walking");
+    allInterests.insert("writing");
+    allInterests.insert("xylophoning");
+    allInterests.insert("yoga");
+    allInterests.insert("zumba");
+ */
+    
+}
+
+void Interests::addInterest(string interest){
+     allInterests.insert(interest);
+}
+
+void Interests::printAllInterests(){
+    for(it= allInterests.begin(); it !=allInterests.end(); it++){
+        cout<< *it<< endl;
+    }
+}
+//______________________________________________________________________________________
+
+class myInterests:public Interests{
+public:
+    set<string> myInterests;
+    set<string>::iterator itmi;
+    
+    set<string> myBadHabits;
+    set<string>::iterator itmb;
+    
+public:
+    void casesInterests();
+    void casesBadHabits();
+    void insert(string);
+    void chooseInterests();
+    void chooseBadHabits();
+    void addInterests();
+    void addBadHabits();
+    void printMyInterests();
+    void printMyBadHabits();
+
+public:
+    void compare();
+};
+
+void myInterests::casesInterests(){
+    cout << "Enter 1 to add interests, 0 to choose them from the list                 (-1:to quit)" << endl;
+    int key;
+    cin >> key;
+    switch(key){
+        case 0: myInterests::chooseInterests();
+            casesInterests();
+            break;
+        case 1: myInterests::addInterests();
+            break;
+        case -1: break;
+    }
+}
+
+void myInterests::casesBadHabits(){
+    cout << "Enter 1 to add what your'e against, 0 to choose them from the list                 (-1:to quit)" << endl;
+    int key2;
+    cin >> key2;
+    switch(key2){
+        case 0: myInterests::chooseBadHabits();
+            casesBadHabits();
+            break;
+        case 1: myInterests::addBadHabits();
+            break;
+        case -1: break;
+    }
+}
+
+void myInterests::chooseInterests(){
+    
+    int key;
+    for(it=allInterests.begin();it !=allInterests.end();it++){
+        if (myInterests.count(*it)!=1){
+            cout << "______";
+            cout << *it << "______" <<endl;
+            cout << "Add to your interests? enter 1:yes/0:no            (-1:change)" <<endl;
+            cin>> key;
+            if(key == 1){
+                myInterests.insert(*it);
+            }else if(key == -1){
+                casesInterests();
+            }
+        }
+    }
+}
+
+void myInterests::chooseBadHabits(){
+    
+    int key;
+    for(it=allInterests.begin();it !=allInterests.end();it++){
+        if (myBadHabits.count(*it)!=1){
+            cout << "______";
+            cout << *it << "______" <<endl;
+            cout << "Against this habit? enter 1:yes/0:no            (-1:change)"<<endl;
+            cin>> key;
+            if(key == 1){
+                myBadHabits.insert(*it);
+            }else if(key == -1){
+                casesBadHabits();
+            }
+        }
+    }
+}
+
+void myInterests::addInterests(){
+    cout << "Add an interest.            (back:to go back)"<<endl;
+
+    string interest;
+    
+    while(true){
+        cin>> interest;
+        if (interest!="back") {
+            myInterests.insert(interest);
+            allInterests.insert(interest);
+        } else {
+            break;
+        }
+    }
+    
+    if(interest=="back"){
+        casesInterests();
+    }
+}
+
+void myInterests::addBadHabits(){
+    cout << "What are you against.            (back:to go back)"<<endl;
+
+    string badHabit;
+    
+    while(true){
+        cin>> badHabit;
+        if(badHabit!="back"){
+            myBadHabits.insert(badHabit);
+            allInterests.insert(badHabit);
+        }else{
+            break;
+        }
+    }
+    
+    if(badHabit=="back"){
+        allInterests.erase("back");
+        casesBadHabits();
+    }
+}
+
+void myInterests::printMyInterests(){
+    cout <<"Interests: "<< endl<<endl;
+    for(itmi = myInterests.begin(); itmi !=myInterests.end(); itmi++){
+        cout<<"   "<< *itmi<< endl;
+    }
+}
+
+void myInterests::printMyBadHabits(){
+    cout << endl;
+    cout <<"Against: "<< endl <<endl;
+    for(itmb = myInterests.begin(); itmb !=myInterests.end(); itmb++){
+        cout<<"   "<< *itmb<< endl;
+    }
+}
+
+void myInterests::compare(){
+    int sim=0;
+    
+    
+//    cout << myInterests.size() << endl;
+    for(itmi=myInterests.begin();itmi !=myInterests.end();itmi++){
+//      if(mard1interests.count(*itmb)!=1){
+            if (mard1interests.count(*itmi)!=0){
+                sim++;
+            }
+    }
+    int percent = sim/allInterests.size() *100 ;
+    cout<<percent <<"%"<< endl;
+}
+
+//________________________________________________________________________________________
+
+class User: protected myInterests{
+    
+private:
+    string name;
+    int age;
+    char gender;
+    
+public:
+    void setInfo();
+    void printDetails();
+
+};
+
+void User::setInfo(){
+    string inserted_name;
+    int inserted_age;
+    char inserted_gender;
+    
+    cout<< "Enter your name" << endl;
+    cin>> inserted_name;
+    name = inserted_name;
+    cout << "Enter your age" << endl;
+    cin>> inserted_age;
+    age = inserted_age;
+    cout<< "Enter you gender f:female; m:male" << endl;
+    cin>> inserted_gender;
+    gender = inserted_gender;
+}
+
+void User::printDetails(){
+    cout<< endl;
+    cout << name <<" "<< age;
+    if(gender=='f'){
+    cout <<" "<< "female" <<" "<< endl;
+    }else if(gender=='m'){
+        cout <<" "<< "male" <<" "<< endl;
+    }
+}
+
+//________________________________________________________________________________________
+
+int main(){
+
+    
+   User person1;
+   person1.setInfo();
+    
+    myInterests obj;
+    obj.casesInterests();
+//  obj.casesBadHabits();
+    
+    obj.compare();
+    
+
+}
